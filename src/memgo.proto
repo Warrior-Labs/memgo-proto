@@ -1,0 +1,32 @@
+syntax = "proto3";
+package memgopb;
+option go_package = "./;memgopb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message WriteRequest {
+  string key = 1;
+  bytes value = 2;
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message ReadRequest {
+  string key = 1;
+}
+
+message ReadResponse {
+  string key = 1;
+  bytes value = 2;
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+message DeleteRequest {
+  string key = 1;
+}
+
+service MemgoService {
+  rpc Write(WriteRequest) returns (google.protobuf.Empty);
+  rpc Read(ReadRequest) returns (ReadResponse);
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+}
